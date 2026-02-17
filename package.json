@@ -2,14 +2,17 @@
   "name": "d3-example",
   "version": "0.0.0",
   "devDependencies": {
+    "gh-pages": "6.3.0",
     "typescript": "~5.9.3",
     "vite": "^7.3.1"
   },
   "private": true,
+  "homepage": "https://github.com/ElvisWangTech/d3timeline-example.git",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "type": "module",
   "dependencies": {
