@@ -3,8 +3,11 @@ import { type Locale, D3Timeline } from "@yiwei016/d3timeline";
 
 import "@yiwei016/d3timeline/index.css";
 import "./example.css";
+import { ZoomSlider } from "@yiwei016/d3timeline-plugins";
+import "@yiwei016/d3timeline-plugins/ZoomSlider.css";
 // 演示代码
 let projectTimeline: D3Timeline;
+let zoomSliderPlugin: ZoomSlider;
 let versionsTimeline: D3Timeline;
 let eventLog: LogEntry[] = [];
 
@@ -23,7 +26,34 @@ function initProjectTimeline() {
   const container = document.getElementById(
     "project-timeline",
   ) as HTMLDivElement;
-  projectTimeline = new D3Timeline(container);
+
+  const sliderContainer = document.getElementById(
+    "project-zoom-slider",
+  ) as HTMLDivElement;
+
+  zoomSliderPlugin = new ZoomSlider(sliderContainer, {
+    range: [0.49, 0.52],
+    sparks: [
+      { id: "1", pos: [0.1], color: "#667eea" },
+      {
+        id: "2",
+        pos: [0.49, 0.52],
+        color: "#f093fb",
+      },
+      { id: "3", pos: [0.8], color: "#4facfe" },
+    ],
+    dateFormat: (date: Date) => {
+      // YYYY-MM-DD
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    },
+  });
+
+  projectTimeline = new D3Timeline(container, {
+    plugins: [zoomSliderPlugin],
+  });
 
   // 添加时间线
   projectTimeline.addTimeline("产品运营", "#4facfe", "stage3");
@@ -247,7 +277,7 @@ function addRandomEvent() {
   const endDate = new Date("2026-12-31");
   const randomDate = new Date(
     startDate.getTime() +
-    Math.random() * (endDate.getTime() - startDate.getTime()),
+      Math.random() * (endDate.getTime() - startDate.getTime()),
   );
 
   const event = projectTimeline.addEvent(
@@ -281,7 +311,7 @@ function addRandomRangeEvent() {
   const endDate = new Date("2026-12-31");
   const startTime = new Date(
     startDate.getTime() +
-    Math.random() * (endDate.getTime() - startDate.getTime()),
+      Math.random() * (endDate.getTime() - startDate.getTime()),
   );
   const endTime = new Date(
     startTime.getTime() + Math.random() * 30 * 24 * 60 * 60 * 1000,
@@ -388,6 +418,14 @@ function changeLocale(newLocale: Locale) {
   versionsTimeline.changeLocale(newLocale);
 }
 
+
+function toggleZoomSlider(show: boolean) {
+  const zoomSliderContainer = document.getElementById(
+    "project-zoom-slider",
+  ) as HTMLDivElement;
+  zoomSliderContainer.style.display = show ? "block" : "none";
+}
+
 function logEvent(message: any, type = "info") {
   const timestamp = new Date().toLocaleTimeString("zh-CN");
   const logEntry = { message, type, timestamp };
@@ -425,3 +463,4 @@ window.exportData = exportData;
 window.importData = importData;
 window.toggleStageLines = toggleStageLines;
 window.changeLocale = changeLocale;
+window.toggleZoomSlider = toggleZoomSlider;

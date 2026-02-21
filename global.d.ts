@@ -9,4 +9,5 @@ interface Window {
   importData: VoidFunction;
   toggleStageLines: VoidFunction;
   changeLocale: (newLocale: Locale) => void;
+  toggleZoomSlider: (show: boolean) => void;
 }
