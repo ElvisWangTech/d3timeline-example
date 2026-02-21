@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>D3.js 时间轴库演示</title>
         <link rel="icon" href="./logo.png" type="image/png" />
-      <script type="module" crossorigin src="./assets/index-r6OuQnS3.js"></script>
-      <link rel="stylesheet" crossorigin href="./assets/index-ELe7TNbQ.css">
+      <script type="module" crossorigin src="./assets/index-5uxwfx9o.js"></script>
+      <link rel="stylesheet" crossorigin href="./assets/index-CMm7xGmr.css">
     </head>
     <body>
         <div class="container">
@@ -47,8 +47,20 @@
                         <option value="zh">简体中文</option>
                     </select>
                 </div>
+                <!-- checkbox 用于控制project-zoom-slider是否显示 -->
+                <div class="control-group">
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="showZoomSlider"
+                            onchange="toggleZoomSlider(this.checked)"
+                        />
+                        显示缩放滑块
+                    </label>
+                </div>
             </div>
 
+            <div id="project-zoom-slider" class="zoom-slider-container"></div>
             <div id="project-timeline" class="timeline-container"></div>
 
             <div class="controls">
